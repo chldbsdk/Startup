@@ -12,15 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.inhatc.domain.ManagerVO;
-import com.inhatc.persistence.ManagerDAO;
 import com.inhatc.service.ManagerService;
+
 
 /**
  * Handles requests for the application home page.
@@ -29,6 +27,9 @@ import com.inhatc.service.ManagerService;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Inject
+	private ManagerService service;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -47,37 +48,37 @@ public class HomeController {
 		return "project/main/main";
 	}
 	
+	//로그인 페이지 진입
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+	public String login() {
 		return "project/manager/login";
 	}
 	
-//	@RequestMapping(value = "/logincheck", method = RequestMethod.POST)
-//	public String logincheck(ManagerVO vo,HttpServletRequest req) {
-//		logger.info("login");
-//		
-//		//세션 생성
-//		HttpSession session = req.getSession();
-//		
-//		ManagerVO res =service.login(vo);
-//		
-//		if(res!=null) {
-//			session.setAttribute("res", res);
-//			return "redirect:list.do";
-//		} else {
-//			return "redirect:login.do";
-//		}
-//		
-//	}
+	//로그인 체크
+	@RequestMapping(value="/logincheck",method=RequestMethod.POST)
+	public String logincheck(HttpServletRequest request, ManagerVO vo, RedirectAttributes rttr) throws Exception {
+//		System.out.println("login 메서드 진입");
+//		System.out.println("전달된 데이터 : "+vo);
+		
+		HttpSession session = request.getSession();
+		ManagerVO lvo = service.login(vo);
+		
+		if(lvo == null) {
+			int result = 0;
+			rttr.addFlashAttribute("result",result);
+			return "redirect:/login";
+		}
+		
+		session.setAttribute("member", lvo); //임시코드 신경 ㄴㄴ
+		
+		return "redirect:/managerMain"; //성공 시 관리자 메인으로 이동
+	}
+	//관리자페이지 메인
+	@RequestMapping(value = "/managerMain", method = RequestMethod.GET)
+	public String managerMain(Locale locale, Model model) {
+		
+		return "project/manager/managerMain";
+	}
 	
 	
 	

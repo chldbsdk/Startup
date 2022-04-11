@@ -1,6 +1,7 @@
 package com.inhatc.persistence;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public class ManagerDAOImpl implements ManagerDAO{
 	public ManagerVO login(ManagerVO vo) throws Exception {
 		return sqlSession.selectOne(namespace+".login",vo);
 	}
+	
+	
 }

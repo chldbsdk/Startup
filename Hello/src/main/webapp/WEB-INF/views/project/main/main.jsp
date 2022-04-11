@@ -20,6 +20,7 @@ ul, li, div{
 <body>
 <div>
 <%@ include file="top.jsp" %>
+<%-- <%@ include file="mainbanner.jsp" %> --%>
 <%@ include file="footer.jsp" %>
 </div>
 

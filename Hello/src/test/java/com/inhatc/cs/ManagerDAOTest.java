@@ -7,18 +7,22 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.inhatc.domain.MemberVO;
-import com.inhatc.persistence.MemberDAO;
+import com.inhatc.domain.ManagerVO;
+import com.inhatc.persistence.ManagerDAO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
 		locations = {"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
-public class readTest {
+public class ManagerDAOTest {
 	@Inject
-	private MemberDAO dao;
+	private ManagerDAO dao;
 	
 	@Test
-	public void readMember() throws Exception{
-		System.out.println(dao.readMember("123123"));
+	public void testInsertMember() throws Exception {
+		ManagerVO vo = new ManagerVO();
+		vo.setUserid("nakwon00");
+		vo.setUserpw("Nakwon2022!");
+		
+		dao.login(vo);
+		System.out.println("°á°ú"+dao.login(vo));
 	}
-	
 }

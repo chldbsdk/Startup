@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>낙원 관리자 페이지</title>
 </head>
-<style>
-
-</style>
 <body>
-<h3>관리자 페이지</h3>
+<header><%@ include file="top.jsp" %></header>
+<section>
 
+</section>
+<footer><%@ include file="footer.jsp" %></footer>
 </body>
 </html>

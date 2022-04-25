@@ -77,10 +77,14 @@ public class HomeController {
 	@RequestMapping(value = "/managerMain", method = RequestMethod.GET)
 	public String managerMain(Locale locale, Model model) {
 		
-		return "project/manager/managerMain";
+		return "project/manager/Main/managerMain";
 	}
 	
-	
+	//로그인 페이지 진입
+	@RequestMapping(value = "/location", method = RequestMethod.GET)
+	public String location() {
+		return "project/location/location";
+	}
 	
 	
 	
